@@ -22,9 +22,6 @@ A simple web application that:
 8. [GKE Deployment](#gke-deployment)
 9. [CI/CD Pipeline](#cicd-pipeline)
 10. [Testing & Verification](#testing--verification)
-11. [Cleanup](#cleanup)
-12. [Next Steps](#next-steps)
-
 ---
 
 ## Prerequisites

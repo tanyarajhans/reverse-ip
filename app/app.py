@@ -1,3 +1,5 @@
+# A simple Flask application to reverse IP addresses and store them in a PostgreSQL database.
+
 from flask import Flask, request
 import os
 import psycopg2

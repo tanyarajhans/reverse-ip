@@ -1,0 +1,5 @@
+CREATE TABLE reverse_ips (
+    id SERIAL PRIMARY KEY,
+    ip TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

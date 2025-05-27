@@ -40,19 +40,3 @@ jobs:
       - name: Deploy with Helm
         run: |
           helm upgrade --install reverse-ip charts
-
-      - name: Wait for LoadBalancer IP & Print URL
-        run: |
-          echo "⏳ Waiting for external IP…"
-          for i in {1..10}; do
-            IP=$(kubectl get svc reverse-ip-service \
-              -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-            if [ -n "$IP" ]; then
-              echo "✅ External IP is: $IP"
-              echo "🌐 App URL: http://$IP"
-              exit 0
-            fi
-            sleep 10
-          done
-          echo "❌ Timed out waiting for External IP" >&2
-          exit 1

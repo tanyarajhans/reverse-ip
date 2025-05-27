@@ -1,0 +1,42 @@
+name: reverse-ip-deployment
+description: CI/CD pipeline for Reverse IP App using Docker, GCP, and Helm
+# This workflow builds a Docker image, pushes it to DockerHub, and deploys it to GCP using Helm.
+# It is triggered on pushes to the main branch.
+# The Docker image is built from the Dockerfile in the root directory.
+# The GCP credentials and DockerHub credentials are stored in GitHub Secrets.
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/reverse-ip-app:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/reverse-ip-app:latest
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2.1.10
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set kubectl context
+        uses: google-github-actions/get-gke-credentials@v2.3.3
+        with:
+          cluster_name: reverse-ip-cluster
+          location: asia-south1
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install reverse-ip charts

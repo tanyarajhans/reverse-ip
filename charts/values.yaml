@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: tanyarajhans7/reverse-ip
-  tag: 0.0.1
+  tag: latest
   pullPolicy: Always
 
 service:

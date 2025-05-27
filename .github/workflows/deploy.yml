@@ -23,7 +23,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/reverse-ip-app:latest .
+          docker build --progress=plain -t ${{ secrets.DOCKER_USERNAME }}/reverse-ip-app:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/reverse-ip-app:latest
 
       - name: Authenticate to GCP
